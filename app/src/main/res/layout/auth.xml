@@ -4,4 +4,119 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Auth"/>
+    tools:context=".Auth">
+
+    <EditText
+        android:id="@+id/username_text_field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/email_text_field"
+        android:layout_marginHorizontal="10dp"
+        android:inputType="text"
+        android:hint="Username(id)"
+        android:visibility="invisible"
+        android:minHeight="48dp"
+        />
+
+    <EditText
+        android:id="@+id/age_text_field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_text_field"
+        app:layout_constraintBottom_toTopOf="@+id/email_text_field"
+        android:layout_marginHorizontal="10dp"
+        android:inputType="text"
+        android:hint="возраст"
+        android:visibility="invisible"
+        android:minHeight="48dp"
+
+        />
+
+    <EditText
+        android:id="@+id/password_text_field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="пароль"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_text_field"
+        app:layout_constraintBottom_toTopOf="@+id/log_in"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="15dp"
+        android:minHeight="48dp"
+        />
+
+    <EditText
+        android:id="@+id/email_text_field"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="почта"
+        android:inputType="textEmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/nice_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/password_text_field"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="15dp"
+        android:minHeight="48dp"
+
+        />
+
+    <Button
+        android:id="@+id/sing_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Зарегистрироваться"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/log_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_text_field"
+        android:backgroundTint="@color/btn"
+        android:onClick="Registartion"
+         />
+
+    <ImageView
+        android:id="@+id/nice_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/app_ic"
+        android:scaleType="center"
+
+        />
+
+    <Button
+
+        android:id="@+id/log_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Войти"
+        app:layout_constraintEnd_toStartOf="@+id/sing_up"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_text_field"
+        android:backgroundTint="@color/btn"
+        android:onClick="login"
+        />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="error?"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/username_text_field"
+        android:visibility="invisible"
+        android:textColor="@color/design_default_color_error"
+         />
+</androidx.constraintlayout.widget.ConstraintLayout>
