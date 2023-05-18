@@ -1,21 +1,65 @@
 package com.example.massenger;
 
-public class User { // класс в котором будет передаваться данные о пользователе
-    public static String email;
-    public static String username;
-    public static String photo; //аватарка
-    private static String password;
-    public static String marital_status; //семейное положение
-    public static String about_me; //о себе
-    public static Integer age;
-    public User(String email, String username, String photo, String password, String marital_status, String about_me, Integer age) {
-        this.email= email;
-        this.username = username;
-        this.photo= photo;
-        this.password= password;
-        this.marital_status= marital_status;
-        this.about_me = about_me;
-        this.age = age;
+import android.graphics.Bitmap;
+
+public class User { // класс в котором будут ХРАНИТЬСЯ данные о пользователе
+    private String Email;
+    private String Username;
+    private Bitmap Photo; //аватарка
+    private String About_me; //о себе
+    private String Age;
+    public User(String email, String username, Bitmap photo, String about_me, String age) {
+        this.Email = email;
+        this.Username = username;
+        this.Photo = photo;
+        this.About_me = about_me;
+        this.Age = age;
+    }
+    public User(String email, String username, Bitmap photo){
+        this.Email = email;
+        this.Username = username;
+        this.Photo = photo;
+        this.About_me ="пусто";
+        this.Age ="пусто";
     }
 
+    public  String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String email) {
+        this.Email = email;
+    }
+
+    public String getUsername() {
+        return Username;
+    }
+
+    public void setUsername(String username) {
+        this.Username = username;
+    }
+
+    public Bitmap getPhoto() {
+        return Photo;
+    }
+
+    public  void setPhoto(Bitmap photo) {
+        this.Photo = photo;
+    }
+
+    public String getAbout_me() {
+        return About_me;
+    }
+
+    public void setAbout_me(String about_me) {
+        this.About_me = about_me;
+    }
+
+    public String getAge() {
+        return Age;
+    }
+
+    public void setAge(String age) {
+        this.Age = age;
+    }
 }

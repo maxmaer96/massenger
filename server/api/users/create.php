@@ -5,56 +5,50 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+header("Access-Control-Allow-Headers:*");
+//функция для перехвата запроса 
 // получаем соединение с базой данных
 include_once "../config/database.php";
 
-// создание объекта товара
+// создание объекта Юзера
 include_once "../objects/users.php";
+
+
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
 
 // получаем отправленные данные
 $data = json_decode(file_get_contents("php://input"));
+$user->username = $data->username;
+$user->age = $data->age;
+$user->email = $data->email;
+$user->password = $data->password;
 
-// убеждаемся, что данные не пусты
 if (
-    !empty($data->username) &&
-    !empty($data->email) &&
-    !empty($data->password) &&
-    !empty($data->age)
+    !empty($user->username) &&
+    !empty($user->email) &&
+    $user->$email_exists == false &&
+    !empty($user->password) &&
+    !empty($user->age) &&
+    $user->create()
 ) {
-    // устанавливаем значения свойств юзера
-    $user->username = $data->username;
-    $user->email = $data->email;
-    $user->password = $data->password;
-    $user->age = $data->age;
-
-
-    // создание товара
-    if ($product->create()) {
-        // установим код ответа - 201 создано
-        http_response_code(201);
-
-        // сообщим пользователю
-        echo json_encode(array("message" => "Юзер был зарегестрирован."), JSON_UNESCAPED_UNICODE);
-    }
-    // если не удается создать товар, сообщим пользователю
-    else {
-        // установим код ответа - 503 сервис недоступен
-        http_response_code(503);
-
-        // сообщим пользователю
-        echo json_encode(array("message" => "не получаеться зарегестрировать Юзера"), JSON_UNESCAPED_UNICODE);
-    }
+    // Устанавливаем код ответа
+    http_response_code(200);
+ 
+    // Покажем сообщение о том, что пользователь был создан
+    echo json_encode(array("message" => "Пользователь был создан"), JSON_UNESCAPED_UNICODE);
 }
-// сообщим пользователю что данные неполные
+ 
+// Сообщение, если не удаётся создать пользователя
 else {
-    // установим код ответа - 400 неверный запрос
+    
+ 
+    // Устанавливаем код ответа
     http_response_code(400);
-
-    // сообщим пользователю
-    echo json_encode(array("message" => "Невозможно зарегестрировать Юзера. Данные неполные."), JSON_UNESCAPED_UNICODE);
+ 
+    // Покажем сообщение о том, что создать пользователя не удалось
+    echo json_encode(array("message" => "Невозможно создать пользователя" ),JSON_UNESCAPED_UNICODE);
+    
 }
+?>

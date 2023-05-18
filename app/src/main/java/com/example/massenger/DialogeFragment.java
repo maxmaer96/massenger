@@ -7,46 +7,28 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 public class DialogeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public DialogeFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static DialogeFragment newInstance(String param1, String param2) {
-        DialogeFragment fragment = new DialogeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+TextView noUserText;
+String toWho;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Bundle bundle = getArguments();
+        toWho = bundle.getString("user"); //принимаем друга которому юзер захотел написать
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dialoge, container, false);
+        View view = inflater.inflate(R.layout.fragment_dialoge, container, false);
+        noUserText=view.findViewById(R.id.noUserText);
+        noUserText.setVisibility(View.GONE);
+        if(toWho!=null||!toWho.isEmpty()){
+
+        }
+        return view;
     }
 }

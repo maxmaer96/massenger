@@ -45,7 +45,7 @@ if ($num > 0) {
     http_response_code(200);
 
     // выводим данные о товаре в формате JSON
-    echo json_encode($user_arr);
+    echo json_encode($user_arr, JSON_UNESCAPED_UNICODE);
 }
 
 else {
