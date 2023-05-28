@@ -9,7 +9,9 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,15 +43,12 @@ public class FriendsFragment extends Fragment {
 
     ViewUpdateTask viewUpdateTask;
     FriendAdapter.ItemClickListener itemClickListener;
-
+    SwipeRefreshLayout Refreshing;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         current_user =(UserSerial) bundle.getSerializable("current_user");
-
-
-
     }
 
     @Override
@@ -70,13 +69,11 @@ public class FriendsFragment extends Fragment {
                 DialogeFragment dialogeFragment= new DialogeFragment();
 
                 Bundle bundle = new Bundle();
-                bundle.putString("user",Friends.get(Position).getUsername());
+                bundle.putSerializable("user",Friends.get(Position));
+                bundle.putSerializable("current_user",current_user);
                 dialogeFragment.setArguments(bundle);
-
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentsHolder, dialogeFragment, "wannaOpenChat")
-                        .addToBackStack(null)
-                        .commit();
+               FragmentManager fg=  getActivity().getSupportFragmentManager();
+                fg.beginTransaction().add(R.id.fragmentsHolder,dialogeFragment,"3").hide(fg.findFragmentByTag("2")).show(dialogeFragment).commit();
             }
         };
 
@@ -134,7 +131,15 @@ public class FriendsFragment extends Fragment {
             }
         });
 
+        Refreshing = view.findViewById(R.id.Refreshing);
+        Refreshing.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ViewUpdateTask refreshUpdateTask= new ViewUpdateTask();
+                refreshUpdateTask.execute();
 
+            }
+        });
         return view;
     }
 
@@ -142,7 +147,7 @@ public class FriendsFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(getActivity(),"пару секунд.. подгружаю список друзей",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"пару секунд.. подгружаю список друзей",Toast.LENGTH_SHORT).show();
         }
         @Override
         protected ArrayList<User> doInBackground(Void... voids) {
@@ -173,7 +178,7 @@ public class FriendsFragment extends Fragment {
                                         photo = ImageHandler.convert(response.getString("user" + i + " photo"));
                                     }
 
-                                    friends_list.add(new User(response.getString("user" + i + " email"),response.getString("user" + i),photo));
+                                    friends_list.add(new User(response.getString("user" + i + " about"),response.getString("user" + i),photo));
                                     publishProgress(friends_list);
 
                                 }
@@ -204,6 +209,7 @@ public class FriendsFragment extends Fragment {
         protected void onPostExecute(ArrayList<User> users) {
             super.onPostExecute(users);
             Toast.makeText(getActivity().getApplicationContext(),"сделано",Toast.LENGTH_SHORT).show();
+            Refreshing.setRefreshing(false);
         }
     }
 }

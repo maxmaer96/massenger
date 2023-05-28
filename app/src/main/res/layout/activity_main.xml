@@ -28,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
-
+        android:backgroundTint="#f78e38"
+        android:background="#f78e38"
         >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

@@ -2,7 +2,9 @@ package com.example.massenger;
 
 import android.graphics.Bitmap;
 
-public class User { // класс в котором будут ХРАНИТЬСЯ данные о пользователе
+import java.io.Serializable;
+
+public class User implements Serializable { // класс в котором будут ХРАНИТЬСЯ данные о пользователе
     private String Email;
     private String Username;
     private Bitmap Photo; //аватарка
@@ -15,11 +17,11 @@ public class User { // класс в котором будут ХРАНИТЬС�
         this.About_me = about_me;
         this.Age = age;
     }
-    public User(String email, String username, Bitmap photo){
-        this.Email = email;
+    public User(String about_me, String username, Bitmap photo){
+        this.Email = "whatever";
         this.Username = username;
         this.Photo = photo;
-        this.About_me ="пусто";
+        this.About_me =about_me;
         this.Age ="пусто";
     }
 

@@ -36,7 +36,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         User friend = friends.get(position);
         holder.nameView.setText(friend.getUsername());
         holder.AvaView.setImageBitmap(friend.getPhoto());
-        holder.emailView.setText(friend.getEmail());
+        holder.aboutView.setText(friend.getAbout_me());
     }
 
     @Override
@@ -45,13 +45,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView nameView,emailView;
+        TextView nameView, aboutView;
         ImageView AvaView,sendMs;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             nameView= itemView.findViewById(R.id.nameTextViewItem);
             AvaView = itemView.findViewById(R.id.friendAvatarItem);
-            emailView= itemView.findViewById(R.id.emailTextViewItem);
+            aboutView = itemView.findViewById(R.id.aboutTextViewItem);
             sendMs= itemView.findViewById(R.id.messageBtn);
             sendMs.setOnClickListener(this);
 

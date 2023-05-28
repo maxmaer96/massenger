@@ -7,6 +7,21 @@
     android:paddingTop="5dp"
     android:paddingEnd="10dp"
     android:paddingBottom="5dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        android:backgroundTint="#bbf7fd"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/friendAvatarItem"
         android:layout_width="100dp"
@@ -16,6 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleType="centerCrop"
+        android:layout_margin="5dp"
 
         />
     <TextView
@@ -24,28 +40,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:textColor="#bc13fe"
+        android:textColor="#A6423D"
         app:layout_constraintStart_toEndOf="@id/friendAvatarItem"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/emailTextViewItem"
-        style="@style/TextAppearance.AppCompat.Body2"
-        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="имя"/>
+    <ScrollView
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         app:layout_constraintStart_toEndOf="@id/friendAvatarItem"
         app:layout_constraintTop_toBottomOf="@id/nameTextViewItem"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="20dp"
-        android:textColor="#bc13fe"
+        android:layout_marginTop="4dp"
+
+        >
+    <TextView
+        android:id="@+id/aboutTextViewItem"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="о себе"
+        android:textColor="#A6423D"
+
         />
+    </ScrollView>
     <ImageView
         android:id="@+id/messageBtn"
+        android:backgroundTint="#A6423D"
+
         android:layout_width="50dp"
         android:layout_height="40dp"
         android:src="@drawable/baseline_message_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

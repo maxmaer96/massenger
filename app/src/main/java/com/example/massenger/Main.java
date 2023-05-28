@@ -25,52 +25,44 @@ public class Main extends AppCompatActivity {
 
             Bundle bundle= new Bundle();
             bundle.putSerializable("current_user", current_userSerial);
-        final FragmentManager fm = getSupportFragmentManager();
+
+
+        //передадим всем фрагментам данные о текущем пользователе
         FriendsFragment friendsFragment = new FriendsFragment();
         friendsFragment.setArguments(bundle);
+
         ProfileFragment profileFragment = new ProfileFragment();
         profileFragment.setArguments(bundle);
-        DialogeFragment dialogeFragment = new DialogeFragment();
-        SettingsFragment settingsFragment = new SettingsFragment();
-        active= profileFragment;
 
-        fm.beginTransaction().add(R.id.fragmentsHolder, dialogeFragment, "3").hide(dialogeFragment).commit();
-        fm.beginTransaction().add(R.id.fragmentsHolder, friendsFragment, "2").hide(friendsFragment).commit();
+        final FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.fragmentsHolder, friendsFragment, "2").hide(friendsFragment).commit(); //прогружаю все фрагменты сразу при запуске
         fm.beginTransaction().add(R.id.fragmentsHolder,profileFragment, "1").commit();
 
         binding= ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.BotNav.setSelectedItemId(R.id.Profile);
+
+        active= profileFragment;
+        binding.BotNav.setSelectedItemId(R.id.Profile); //при запуске открывать профиль
 
         binding.BotNav.setOnItemSelectedListener(item -> {
             switch(item.getItemId()){
-                case R.id.Dialogs:
-                    fm.beginTransaction().hide(active).show(dialogeFragment).commit();
-                    active = dialogeFragment;
-
-                    break;
                 case R.id.Friend:
-                    fm.beginTransaction().hide(active).show(friendsFragment).commit();
-                    active = friendsFragment;
+                    fm.beginTransaction().hide(profileFragment).show(friendsFragment).commit();
                     break;
                 case R.id.Profile:
-                    fm.beginTransaction().hide(active).show(profileFragment).commit();
-                    active = profileFragment;
+                    fm.beginTransaction().hide(friendsFragment).show(profileFragment).commit();
                     break;
-                case R.id.settings:
-                    fm.beginTransaction().hide(active).show(settingsFragment).commit();
-                    active = settingsFragment;
-                    break;
+
             }
             return true;
         });
 
     }
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentsHolder,fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-    }
+//    private void replaceFragment(Fragment fragment){
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragmentsHolder,fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//    }
 }

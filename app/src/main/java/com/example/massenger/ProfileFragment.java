@@ -71,7 +71,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        email = view.findViewById(R.id.emailTextViewItem);
+        email = view.findViewById(R.id.aboutTextViewItem);
         email.setText("Ваша почта: " + curr_user.getEmail());
 
         username = view.findViewById(R.id.usernameTextView);

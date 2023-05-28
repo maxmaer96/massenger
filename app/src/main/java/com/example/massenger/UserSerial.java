@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 
 public class UserSerial implements Serializable { // класс в котором будет передаваться исключительно данные о текущем пользователе
-    private static String email;
+    private static   String email;
     private static String username;
     private static Bitmap photo; //аватарка
     private static String about_me; //о себе
