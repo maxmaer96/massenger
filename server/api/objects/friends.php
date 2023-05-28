@@ -65,7 +65,7 @@ function isFriends(){
      // Инъекция
     $this->friend1=htmlspecialchars(strip_tags($this->friend1));
     $this->friend2=htmlspecialchars(strip_tags($this->friend2));
-    // Привязываем значение e-mail
+    // Привязываем значение 
     $stmt->bindParam(":friend1", $this->friend1);
     $stmt->bindParam(":friend2", $this->friend2);
     
@@ -93,7 +93,7 @@ function getFriendList(){
     // Инъекция
     $this->friend1=htmlspecialchars(strip_tags($this->friend1));
  
-    // Привязываем значение e-mail
+    // Привязываем значение 
     $stmt->bindParam(":friend1", $this->friend1);
     // Выполняем запрос
       $stmt->execute();
@@ -124,7 +124,7 @@ function getFriendInfo($friendArr){
     $resultInfo=array("count"=>count($friendArr));
     // проходимся по каждому юзеру в списке и забираем их данные
     for($i=1;$i<=count($friendArr);$i++){
-     $query = "SELECT username,photo,email FROM users where username=:user ";
+     $query = "SELECT username,photo,about FROM users where username=:user ";
      
     $stmt = $this->conn->prepare($query);
      $stmt->bindParam(":user", $friendArr["user".$i]);
@@ -133,7 +133,7 @@ function getFriendInfo($friendArr){
      
      $resultInfo["user".$i]=$row["username"];
      $resultInfo["user".$i." photo"]=$row["photo"];
-     $resultInfo["user".$i." email"]=$row["email"];
+     $resultInfo["user".$i." about"]=$row["about"];
     }
     return $resultInfo;
     
