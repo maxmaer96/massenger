@@ -44,7 +44,7 @@ public class Main extends AppCompatActivity {
         active= profileFragment;
         binding.BotNav.setSelectedItemId(R.id.Profile); //при запуске открывать профиль
 
-        binding.BotNav.setOnItemSelectedListener(item -> {
+        binding.BotNav.setOnItemSelectedListener(item -> { //навигация с помощью нижней панели
             switch(item.getItemId()){
                 case R.id.Friend:
                     fm.beginTransaction().hide(profileFragment).show(friendsFragment).commit();
@@ -58,11 +58,22 @@ public class Main extends AppCompatActivity {
         });
 
     }
-//    private void replaceFragment(Fragment fragment){
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.fragmentsHolder,fragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
+
+@Override
+public void onBackPressed() { //обработка нажатие пользователем кнопки "назад" для фрагментов
+    FragmentManager fm = getSupportFragmentManager();
+    OnBackPressedListener backPressedListener = null;
+    for (Fragment fragment: fm.getFragments()) {
+        if (fragment instanceof  OnBackPressedListener) {
+            backPressedListener = (OnBackPressedListener) fragment;
+            break;
+        }
+    }
+
+    if (backPressedListener != null) {
+        backPressedListener.onBackPressed();
+    } else {
+        super.onBackPressed();
+    }
+}
 }

@@ -3,12 +3,18 @@ package com.example.massenger;
 import static android.app.Activity.RESULT_OK;
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -54,6 +60,18 @@ public class ProfileFragment extends Fragment {
         if (!bundle.getSerializable("current_user").equals(null)) {
             curr_user = (UserSerial) bundle.getSerializable("current_user");
         }
+//        NotificationManager notificationManager = (NotificationManager) getActivity().getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+//        Intent intent = new Intent(getActivity().getApplicationContext(), ProfileFragment.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity().getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
+//                .setSmallIcon(R.mipmap.ic_app_logo)
+//                .setContentTitle("Новое сообщение")
+//                .setContentText("у вас новое сообщение от ")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT).setContentIntent(pendingIntent);
+//        NotificationChannel notificationChannel = new NotificationChannel("ченл айди", "ченел айди", NotificationManager.IMPORTANCE_DEFAULT);
+//        notificationManager.createNotificationChannel(notificationChannel);
+//        notificationManager.notify(106,builder.build());
         Log.i("tes", curr_user.getUsername()+ curr_user.getAge()+ curr_user.getAbout_me());
     }
 
@@ -87,6 +105,7 @@ public class ProfileFragment extends Fragment {
         if(curr_user.getPhoto() != null) {
             avatar.setImageBitmap(curr_user.getPhoto());
         }
+
 
 
 

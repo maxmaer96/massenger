@@ -42,7 +42,7 @@ public class FriendsFragment extends Fragment {
     ArrayList<User> friends_list,Friends;
 
     ViewUpdateTask viewUpdateTask;
-    FriendAdapter.ItemClickListener itemClickListener;
+    FriendAdapter.ItemClickListener itemClickListener,profileClicklistner;
     SwipeRefreshLayout Refreshing;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,21 +63,35 @@ public class FriendsFragment extends Fragment {
         if (friends_list==null) {
             viewUpdateTask.execute();
         }
-         itemClickListener = new FriendAdapter.ItemClickListener() {
-            @Override
-            public void onClick(View view, int Position) {
-                DialogeFragment dialogeFragment= new DialogeFragment();
 
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("user",Friends.get(Position));
-                bundle.putSerializable("current_user",current_user);
-                dialogeFragment.setArguments(bundle);
-               FragmentManager fg=  getActivity().getSupportFragmentManager();
-                fg.beginTransaction().add(R.id.fragmentsHolder,dialogeFragment,"3").hide(fg.findFragmentByTag("2")).show(dialogeFragment).commit();
-            }
+         itemClickListener = new FriendAdapter.ItemClickListener() {
+             @Override
+             public void onClickMS(View view, int Position) { //обрабатываем переход в диалог с конкретным юзером
+                 DialogeFragment dialogeFragment= new DialogeFragment();
+
+                 Bundle bundle = new Bundle();
+                 bundle.putSerializable("user",Friends.get(Position));
+                 bundle.putSerializable("current_user",current_user);
+                 dialogeFragment.setArguments(bundle);
+                 FragmentManager fg=  getActivity().getSupportFragmentManager();
+                 fg.beginTransaction().add(R.id.fragmentsHolder,dialogeFragment,"3").hide(fg.findFragmentByTag("2")).show(dialogeFragment).commit();
+             }
+
+             @Override
+             public void onClickAva(View view, int Position) {
+                 Bundle bundle = new Bundle();
+                 bundle.putSerializable("person",Friends.get(Position));
+                 bundle.putString("from","friend");
+                 AnotherUserProfile anotherUserProfile= new AnotherUserProfile();
+                 anotherUserProfile.setArguments(bundle);
+                 FragmentManager fg=  getActivity().getSupportFragmentManager();
+                 fg.beginTransaction().add(R.id.fragmentsHolder,anotherUserProfile,"4").hide(fg.findFragmentByTag("2")).show(anotherUserProfile).commit();
+             }
+
+
         };
 
-
+        // обрабатываем диалог с пользователем когда он хочет добавить друга
 
         FriendBtn = view.findViewById(R.id.AddBtn);
         FriendBtn.setOnClickListener(new View.OnClickListener() {
@@ -132,7 +146,7 @@ public class FriendsFragment extends Fragment {
         });
 
         Refreshing = view.findViewById(R.id.Refreshing);
-        Refreshing.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        Refreshing.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() { //при свайпе вверх до упора обновляем
             @Override
             public void onRefresh() {
                 ViewUpdateTask refreshUpdateTask= new ViewUpdateTask();

@@ -15,12 +15,13 @@ import java.util.ArrayList;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
     private final LayoutInflater inflater;
     private final ArrayList<User> friends;
-    ItemClickListener itemClickListener;
+    ItemClickListener itemClickListener,profileClickListener;
 
     public FriendAdapter(Context context, ArrayList<User> friends,ItemClickListener itemClickListener) {
         this.inflater = LayoutInflater.from(context);
         this.friends = friends;
         this.itemClickListener=itemClickListener;
+        this.profileClickListener = profileClickListener;
     }
 
     @NonNull
@@ -54,16 +55,25 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
             aboutView = itemView.findViewById(R.id.aboutTextViewItem);
             sendMs= itemView.findViewById(R.id.messageBtn);
             sendMs.setOnClickListener(this);
+            AvaView.setOnClickListener(this);
 
     }
 
         @Override
         public void onClick(View v) {
-            itemClickListener.onClick(v,getAdapterPosition());
+            switch (v.getId()){
+                case R.id.messageBtn:
+                    itemClickListener.onClickMS(v,getLayoutPosition());
+                    break;
+                case R.id.friendAvatarItem:
+                    itemClickListener.onClickAva(v,getLayoutPosition());
+            }
+
         }
     }
    public interface ItemClickListener{
-        void onClick(View view, int Position);
-
+        void onClickMS(View view, int Position);
+       void onClickAva(View view,int Position);
     }
+
 }

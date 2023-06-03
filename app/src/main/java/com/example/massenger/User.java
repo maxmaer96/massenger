@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class User implements Serializable { // класс в котором будут ХРАНИТЬСЯ данные о пользователе
     private String Email;
     private String Username;
-    private Bitmap Photo; //аватарка
+    private transient Bitmap Photo; //аватарка
     private String About_me; //о себе
     private String Age;
     public User(String email, String username, Bitmap photo, String about_me, String age) {
