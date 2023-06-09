@@ -78,7 +78,7 @@ public class FriendsFragment extends Fragment {
              }
 
              @Override
-             public void onClickAva(View view, int Position) {
+             public void onClickAva(View view, int Position) { //переход на профиль другого человека
                  Bundle bundle = new Bundle();
                  bundle.putSerializable("person",Friends.get(Position));
                  bundle.putString("from","friend");

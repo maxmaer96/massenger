@@ -56,7 +56,7 @@ public class Auth extends AppCompatActivity {
          else {
             if (!username.getText().toString().isEmpty()&&!age.getText().toString().isEmpty()&&!email.getText().toString().isEmpty()&&!password.getText().toString().isEmpty()&&!username.getText().toString().isEmpty() ) {
                 if (email.getText().toString().matches("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,3})$")){
-                    if(password.getText().toString().length()>3){
+                    if((password.getText().toString().length()>6)&&(password.getText().toString().matches(".*[A-Z].*"))&&(password.getText().toString().matches(".*[0-9].*"))){
                         try {
                             if (age.getText().toString().length() < 4) {
                                 Integer ageasnubmer=0 + Integer.parseInt(age.getText().toString());
@@ -81,7 +81,7 @@ public class Auth extends AppCompatActivity {
                     }else
                     {
                         err_text.setVisibility(View.VISIBLE);
-                        err_text.setText("ваш пароль должен быть длиннее 3-ех символов");
+                        err_text.setText("ваш пароль должен быть длиннее 6-ти символов, и содержать в себе один большой символ и хотя бы одну цифру");
                     }
                 } else
                 {
@@ -168,13 +168,13 @@ public class Auth extends AppCompatActivity {
 
         queue.add(getRequest);
     }
-        public void ClearFields(){
+        public void ClearFields(){ // очистка полей при смене режима
         email.setText("");
         password.setText("");
         username.setText("");
         age.setText("");
     }
-    public void ChangeMode(){
+    public void ChangeMode(){ //для смены формы с режима регистрации на режим авторизации
         if(!registration_mode){
             nice_logo.setVisibility(View.INVISIBLE);
             age.setVisibility(View.VISIBLE);
@@ -191,6 +191,12 @@ public class Auth extends AppCompatActivity {
             ClearFields();
             registration_mode=false;
         }
+    }
+    public boolean passwordIsStrong(String pass){ //проверяем пароль на корректность
+        if (pass.length()<7) return false;
+        if(!pass.matches(".*[A-Z].*"))return false; //латиница
+        if (!pass.matches(".*[0-9].*")) return false;//хотя бы одну цифру
+        return true;
     }
 
 }

@@ -56,64 +56,64 @@ ArrayList<message> messages_stable;
     public void onStop() { //здесь мы переопределим метод который срабатывает при сворачивании приложения что бы выдавать уведомления о новых сообщениях
         super.onStop();
         Log.i("not","вот ту должно бы быть уведомление ");
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
-//                                                                                                .setSmallIcon(R.mipmap.ic_app_logo).
-//                                                                                                setContentTitle("Новое сообщение").
-//                                                                                                setContentText("у вас новое сообщение от ")
-//                                                                                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//        NotificationManagerCompat notificationManager =
-//                NotificationManagerCompat.from(getActivity());
-//        Timer closeTimer = new Timer();
-//        closeTimer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//
-//                ArrayList<message> messages= new ArrayList<>();
-//
-//                String api = "https://messapi.space/api/messages/read.php/";
-//                JSONObject json = new JSONObject();
-//                try {
-//                    json.put("user1",current_user.getUsername());
-//                    json.put("user2",collocutor.getUsername());
-//
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, api, json,
-//                        response -> {
-//                            try {
-//                                if (response.getString("count")!=null);
-//                                int count=response.getInt("count");
-//                                for(int i =1;i<=count;i++){
-//                                    messages.add(new message(response.getString("message"+i+" from_who"),response.getString("message"+i+" to_who"),response.getString("message"+i+" when_sent"),response.getString("message"+i)));
-//                                    if (i==count){
-//                                        if (!messages.equals(messages_stable));{
-//                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
-//                                                    .setSmallIcon(R.mipmap.ic_app_logo).
-//                                                    setContentTitle("Новое сообщение").
-//                                                    setContentText("у вас новое сообщение от ")
-//                                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//                                            NotificationManagerCompat notificationManager =
-//                                                    NotificationManagerCompat.from(getActivity());
-//                                            notificationManager.notify(127,builder.build());
-//                                        }
-//                                    }
-//                                }
-//                            } catch (JSONException e) {
-//                                throw new RuntimeException(e);
-//                            }
-//                        },
-//                        error -> {
-//                            Log.i("Volley", error.toString());
-//
-//
-//                        });
-//                queue.add(request);
-//
-//            }
-//        },2000,5000);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
+                                                                                                .setSmallIcon(R.mipmap.ic_app_logo).
+                                                                                                setContentTitle("Новое сообщение").
+                                                                                                setContentText("у вас новое сообщение от ")
+                                                                                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(getActivity());
+        Timer closeTimer = new Timer();
+        closeTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+
+                ArrayList<message> messages= new ArrayList<>();
+
+                String api = "https://messapi.space/api/messages/read.php/";
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("user1",current_user.getUsername());
+                    json.put("user2",collocutor.getUsername());
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, api, json,
+                        response -> {
+                            try {
+                                if (response.getString("count")!=null);
+                                int count=response.getInt("count");
+                                for(int i =1;i<=count;i++){
+                                    messages.add(new message(response.getString("message"+i+" from_who"),response.getString("message"+i+" to_who"),response.getString("message"+i+" when_sent"),response.getString("message"+i)));
+                                    if (i==count){
+                                        if (!messages.equals(messages_stable));{
+                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
+                                                    .setSmallIcon(R.mipmap.ic_app_logo).
+                                                    setContentTitle("Новое сообщение").
+                                                    setContentText("у вас новое сообщение от ")
+                                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                            NotificationManagerCompat notificationManager =
+                                                    NotificationManagerCompat.from(getActivity());
+                                            notificationManager.notify(127,builder.build());
+                                        }
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            }
+                        },
+                        error -> {
+                            Log.i("Volley", error.toString());
+
+
+                        });
+                queue.add(request);
+
+            }
+        },2000,5000);
   }
 
     @Override
