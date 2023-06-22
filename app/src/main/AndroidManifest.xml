@@ -21,13 +21,17 @@
             android:name=".Main"
             android:exported="false" />
         <activity
-            android:name=".Auth"
-            android:exported="true">
+            android:name=".Splash"
+            android:theme="@style/SplashTheme"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Auth"
+            android:exported="false">
         </activity>
 
 

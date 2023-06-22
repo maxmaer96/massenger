@@ -2,6 +2,7 @@ package com.example.massenger;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,12 +34,16 @@ public class Auth extends AppCompatActivity {
     Button login,sign_up;
     private boolean registration_mode;
     UserSerial curr_userSerial;
-
-
+    SharedPreferences.Editor editor;
+    SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth);
+
+         preferences = getSharedPreferences("acount",MODE_PRIVATE);
+        editor = preferences.edit();
+
         registration_mode=false;
         email=findViewById(R.id.email_text_field); //находим все элементы
         password=findViewById(R.id.password_text_field);
@@ -149,11 +154,16 @@ public class Auth extends AppCompatActivity {
                             Log.i("Volley","jwt is:"+ jwt_enc);
                             JWT jwt = new JWT(jwt_enc);
 
+                            editor.putString("jwt",jwt_enc); //запоминаем пользователя
+                            editor.apply();
+
                             Intent intent = new Intent(Auth.this, Main.class); //и передаем токен на следующую активность
 
                             curr_userSerial = new UserSerial(jwt.getClaim("email").asString(),jwt.getClaim("username").asString(),ImageHandler.convert(jwt.getClaim("photo").asString()),jwt.getClaim("about").asString(),jwt.getClaim("age").asString());
                             intent.putExtra("user", curr_userSerial);
                             startActivity(intent);
+
+                            finish();
                         }
                     } catch (JSONException e) {
                         throw new RuntimeException(e);

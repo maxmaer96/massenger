@@ -1,22 +1,30 @@
 package com.example.massenger;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.example.massenger.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Main extends AppCompatActivity {
     ActivityMainBinding binding;
     private UserSerial current_userSerial;
     String Username;
+    ImageView splash;
+    ProgressBar load;
+    BottomNavigationView bottomNavigationView;
     public Fragment active;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
          //тут мы принимаем данные которые взяли из токена
 
@@ -56,6 +64,7 @@ public class Main extends AppCompatActivity {
             }
             return true;
         });
+
 
     }
 

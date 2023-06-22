@@ -50,71 +50,8 @@ public class DialogeFragment extends Fragment implements OnBackPressedListener {
     Timer timer;
 User collocutor ;
 UserSerial current_user;
+    MessageUpdateTask mstask;
 ArrayList<message> messages_stable;
-
-    @Override
-    public void onStop() { //здесь мы переопределим метод который срабатывает при сворачивании приложения что бы выдавать уведомления о новых сообщениях
-        super.onStop();
-        Log.i("not","вот ту должно бы быть уведомление ");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
-                                                                                                .setSmallIcon(R.mipmap.ic_app_logo).
-                                                                                                setContentTitle("Новое сообщение").
-                                                                                                setContentText("у вас новое сообщение от ")
-                                                                                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(getActivity());
-        Timer closeTimer = new Timer();
-        closeTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-
-                ArrayList<message> messages= new ArrayList<>();
-
-                String api = "https://messapi.space/api/messages/read.php/";
-                JSONObject json = new JSONObject();
-                try {
-                    json.put("user1",current_user.getUsername());
-                    json.put("user2",collocutor.getUsername());
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-                RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, api, json,
-                        response -> {
-                            try {
-                                if (response.getString("count")!=null);
-                                int count=response.getInt("count");
-                                for(int i =1;i<=count;i++){
-                                    messages.add(new message(response.getString("message"+i+" from_who"),response.getString("message"+i+" to_who"),response.getString("message"+i+" when_sent"),response.getString("message"+i)));
-                                    if (i==count){
-                                        if (!messages.equals(messages_stable));{
-                                            NotificationCompat.Builder builder = new NotificationCompat.Builder(getActivity(),"SwirliChat")
-                                                    .setSmallIcon(R.mipmap.ic_app_logo).
-                                                    setContentTitle("Новое сообщение").
-                                                    setContentText("у вас новое сообщение от ")
-                                                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                                            NotificationManagerCompat notificationManager =
-                                                    NotificationManagerCompat.from(getActivity());
-                                            notificationManager.notify(127,builder.build());
-                                        }
-                                    }
-                                }
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
-                        },
-                        error -> {
-                            Log.i("Volley", error.toString());
-
-
-                        });
-                queue.add(request);
-
-            }
-        },2000,5000);
-  }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,7 +59,6 @@ ArrayList<message> messages_stable;
         Bundle bundle = getArguments();
             collocutor =(User) bundle.getSerializable("user"); //принимаем друга которому юзер захотел написать
             current_user =(UserSerial) bundle.getSerializable("current_user");
-
 
         messages_stable= new ArrayList<>();
     }
@@ -135,7 +71,7 @@ ArrayList<message> messages_stable;
 
         userAva=view.findViewById(R.id.userAva);
         userAva.setImageBitmap(collocutor.getPhoto());
-        userAva.setOnClickListener(new View.OnClickListener() {
+        userAva.setOnClickListener(new View.OnClickListener() { // переход на профиль собеседника
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -161,7 +97,7 @@ ArrayList<message> messages_stable;
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                MessageUpdateTask mstask = new MessageUpdateTask();
+                mstask = new MessageUpdateTask();
                 mstask.execute();
             }
         },0,3000);
@@ -210,9 +146,11 @@ ArrayList<message> messages_stable;
         BackBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mstask.cancel();
                 timer.cancel();
                 FragmentManager fg=  getActivity().getSupportFragmentManager();
                 fg.beginTransaction().remove(fg.findFragmentByTag("3")).show(fg.findFragmentByTag("2")).commit();
+
             }
         });
 
@@ -222,6 +160,7 @@ ArrayList<message> messages_stable;
 // обрабатываем нажатие на кнопку "назад" в системе
     @Override
     public void onBackPressed() {
+        mstask.cancel();
         timer.cancel();
         FragmentManager fg=  getActivity().getSupportFragmentManager();
         fg.beginTransaction().remove(fg.findFragmentByTag("3")).show(fg.findFragmentByTag("2")).commit();
@@ -287,7 +226,7 @@ ArrayList<message> messages_stable;
                                             NotificationManagerCompat notificationManager =
                                                     NotificationManagerCompat.from(getActivity());
                                             notificationManager.notify(127,builder.build());
-                                            Log.i("not","вот ту должно бы быть уведомление ");
+                                            Log.i("not","вам новое сообщение ");
                 }
             }
         }
@@ -298,6 +237,9 @@ ArrayList<message> messages_stable;
 
         }
 
+        public void cancel() {
+
+        }
     }
 
 }
